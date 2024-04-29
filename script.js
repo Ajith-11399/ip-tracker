@@ -55,7 +55,7 @@ button.addEventListener("click", async (event) => {
   //! Fetching API using Async - Await =>
   try {
     const result = await fetch(
-      `http://api.ipstack.com/${input}?access_key=019bb11249dfa8eca89ab1fcd95eafdd`
+      `https://api.ipstack.com/${input}?access_key=019bb11249dfa8eca89ab1fcd95eafdd`
     );
     const data = await result.json();
 
