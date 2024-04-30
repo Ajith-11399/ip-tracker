@@ -69,20 +69,20 @@ button.addEventListener("click", async (event) => {
     const tbody = document.createElement("tbody");
 
     const rowData = [
-      { label: "IP Address", value: data?.ip },
-      { label: "IP Type", value: data?.type },
-      { label: "Country Code", value: data?.country_code },
-      { label: "Country Name", value: data?.country_name },
-      { label: "Region Code", value: data?.region_code },
-      { label: "Region Name", value: data?.region_name },
-      { label: "City", value: data?.city },
-      { label: "ZIP Code", value: data?.zip },
-      { label: "Latitude", value: data?.latitude },
-      { label: "Longitude", value: data?.longitude },
+      { label: "IP Address", value: data.ip },
+      { label: "IP Type", value: data.type },
+      { label: "Country Code", value: data.country_code },
+      { label: "Country Name", value: data.country_name },
+      { label: "Region Code", value: data.region_code },
+      { label: "Region Name", value: data.region_name },
+      { label: "City", value: data.city },
+      { label: "ZIP Code", value: data.zip },
+      { label: "Latitude", value: data.latitude },
+      { label: "Longitude", value: data.longitude },
       { label: "Prefix", value: data?.location?.calling_code },
-      { label: "Geo - Name ID", value: data?.location?.geoname_id },
-      { label: "Capital", value: data?.location?.capital },
-      { label: "Language", value: data?.location?.languages[0]?.name },
+      { label: "Geo - Name ID", value: data.location.geoname_id },
+      { label: "Capital", value: data.location.capital },
+      { label: "Language", value: data.location.languages[0].name },
     ];
 
     rowData.forEach(({ label, value }) => {
