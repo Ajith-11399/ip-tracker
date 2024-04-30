@@ -1,108 +1,114 @@
-//! Creating a function named element =>
+//! Element function =>
 function element(tag, className, id, text) {
-  const tags = document.createElement(tag);
-  tags.id = id;
-  tags.className = className;
-  tags.textContent = text;
-  return tags;
+    const tags = document.createElement(tag);
+    if (id) tags.id = id;
+    tags.className = className;
+    tags.innerHTML = text;
+    return tags;
 }
 
-//! Creating container, title and rows =>
-const container = element("div", "container mt-5 mb-5", "", "");
-const h1 = element(
-  "h1",
-  "text-center mt-5 mb-4",
-  "title",
-  "IP Address Validation"
-);
-const row = element(
-  "div",
-  "row align-items-center justify-content-center",
-  "",
-  ""
-);
+//! Creating containers and row =>
+const container = element("div", "container", "", "");
+const h1 = element("h1", "text-center mt-5 mb-5 text-success", "title", "IP Address Validation");
+const row = element("div", "row justify-content-center", "", "");
 
-//! Creating Rows =>
-const box = document.createElement("div");
-box.className = "col-lg-6 col-md-8 col-sm-10";
-box.innerHTML = `
+const box1 = element("div", "col-lg-6 col-md-6 col-sm-12 mt-4 mb-5", "", `
     <div class="card border-primary">
-        <div class="card-header bg-primary">
-            <h5 class="text-center text-white pt-1">Get details of a <b>Public</b> IP address</h5>
+        <div class="card-header bg-primary text-white pt-3">
+            <h5 class="text-center">Check an IP Address for free</h5>
         </div>
-        <div class="card-body">
-            <input type="text" class="inp form-control mb-2 border-primary" id="ipAddress" placeholder="Enter a public IP address">
-            <button type="button" class="btn btn-primary btn-block">Check</button>
-            <div class="img-top mt-2">
-                <img src="" id="image" class="card-img-top" alt="">
-            </div>
-            <div id="details" class="mt-3"></div>
+        <div class="card-body d-flex align-items-center justify-content-center flex-column mb-1">
+            <input type="text" id="ipAddress" class="form-control border-primary" placeholder="Enter your IP Address to check!" required="">
+            <button type="submit" class="btn btn-primary">Click here</button>
         </div>
+        <p class="text-dark m-2"> * No need to enter IP to check yours, you can get details by just clicking the Button.</p>
     </div>
-  `;
+`);
 
-//! Appending child tags to parent tags =>
-row.appendChild(box);
+//! Appending values =>
+row.appendChild(box1);
 container.appendChild(h1);
 container.appendChild(row);
 document.body.append(container);
 
-//! Added event listener for, when an ip address was submitted, the number value directly appended to the API url, so we can get the details about that IP Address dynamically =>
+//! Add event listener for the submit button =>
 const button = document.querySelector("button");
 button.addEventListener("click", async (event) => {
-  const input = document.getElementById("ipAddress").value.trim();
+    const input = document.getElementById("ipAddress").value.trim();
 
-  //! Fetching API using Async - Await =>
-  try {
-    const result = await fetch(
-      `http://api.ipstack.com/${input}?access_key=019bb11249dfa8eca89ab1fcd95eafdd`
-    );
-    const data = await result.json();
+    try {
+        //! Try block =>
+        const result = await fetch(
+            `https://ipgeolocation.abstractapi.com/v1/?api_key=36472a8c4dcb4074a805f9a1ffe7a407&ip_address=${input}`
+        );
+        const data = await result.json();
 
-    const ele = document.getElementById("details");
-    ele.innerHTML = "";
+        //! Remove any existing details before appending new ones =>
+        const existingDetails = document.querySelector(".details");
+        if (existingDetails) {
+            existingDetails.remove();
+        }
 
-    const table = document.createElement("table");
-    table.classList = "table";
+        //! IP Details =>
+        const details = document.createElement("div");
+        details.classList = "col-lg-6 col-md-6 col-sm-12 mt-4 mb-5 details";
 
-    // Create table structure and rows
-    const tbody = document.createElement("tbody");
+        const imgBox = document.createElement("div");
+        imgBox.classList = "img-box mt-3";
 
-    const rowData = [
-      { label: "IP Address", value: data?.ip },
-      { label: "IP Type", value: data?.type },
-      { label: "Country Code", value: data?.country_code },
-      { label: "Country Name", value: data?.country_name },
-      { label: "Region Code", value: data?.region_code },
-      { label: "Region Name", value: data?.region_name },
-      { label: "City", value: data?.city },
-      { label: "ZIP Code", value: data?.zip },
-      { label: "Latitude", value: data?.latitude },
-      { label: "Longitude", value: data?.longitude },
-      { label: "Prefix", value: data?.location?.calling_code },
-      { label: "Geo - Name ID", value: data?.location?.geoname_id },
-      { label: "Capital", value: data?.location?.capital },
-      { label: "Language", value: data?.location?.languages[0]?.name },
-    ];
+        const h4 = document.createElement("h4");
+        h4.classList = 'text-center';
 
-    rowData.forEach(({ label, value }) => {
-      const row = document.createElement("tr");
-      const th = document.createElement("th");
-      th.scope = "row";
-      th.innerHTML = label;
-      const td = document.createElement("td");
-      td.innerHTML = value;
-      row.appendChild(th);
-      row.appendChild(td);
-      tbody.appendChild(row);
-    });
+        const image = document.createElement("img");
+        image.classList = "card-img-top mb-3";
+        image.setAttribute("src", data.flag?.png || "NA");
+        image.setAttribute("alt", "Flag of a Nation");
 
-    table.appendChild(tbody);
-    ele.appendChild(table);
+        const table = document.createElement("table");
+        table.classList = "table table-bordered border-primary mt-5 text-center";
 
-    const image = document.getElementById("image");
-    image.src = data.location.country_flag;
-  } catch (error) {
-    console.error("Error fetching IP details:", error);
-  }
-});
+        const tbody = document.createElement("tbody");
+
+        //! Assigning label and value =>
+        const rowData = [
+            { label: "IP Address", value: data.ip_address },
+            { label: "City", value: data.city },
+            { label: "Region Name", value: data.region },
+            { label: "Region Code", value: data.region_iso_code },
+            { label: "Postal Code", value: data.postal_code },
+            { label: "Country Name", value: data.country },
+            { label: "Country Code", value: data.country_code },
+            { label: "Latitude", value: data.latitude },
+            { label: "Longitude", value: data.longitude },
+            { label: "VPN", value: data.security.is_vpn },
+            { label: "Timezone", value: data.timezone.name }, 
+            { label: "Current Time", value: data.timezone.current_time },
+            { label: "Currency", value: data.currency_code },
+            { label: "Connection Type", value: data.connection.connection_type },
+            { label: "ISP", value: data.connection.isp_name },
+        ];
+
+        //! Using forEach method multiple table roes =>
+        rowData.forEach(({ label, value }) => {
+            const row = document.createElement("tr");
+            const th = document.createElement("th");
+            th.scope = "row";
+            th.innerHTML = label;
+            const td = document.createElement("td");
+            td.innerHTML = value;
+            row.appendChild(th);
+            row.appendChild(td);
+            tbody.appendChild(row);
+        });
+
+        //! Appending to the main structure =>
+        imgBox.appendChild(image);
+        table.appendChild(tbody);
+        details.append(imgBox, table);
+        row.appendChild(details);
+        container.appendChild(row);
+    } catch (error) {
+        //! Catch block =>
+        console.log("Error fetching data from API", error);
+    }
+}); 

@@ -5,6 +5,23 @@
   font-style: normal;
 }
 
+.card{
+  box-shadow: 1px 15px 15px 1px !important;
+}
+
+.details{
+  border-radius: 15px !important;
+  box-shadow: 1px 15px 15px 1px !important;
+}
+
 .card-img-top{
   border-radius: 15px !important;
+}
+
+input{
+  margin: 20px 0 0 0 !important;
+}
+
+button{
+  margin: 20px 0 5px 0 !important;
 }
