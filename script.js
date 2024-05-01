@@ -21,7 +21,7 @@
                 <input type="text" id="ipAddress" class="form-control border-primary" placeholder="Enter your IP Address to check!" required="">
                 <button type="submit" class="btn btn-primary">Click here</button>
             </div>
-            <p class="text-dark m-2"> * To check yours just click the Button to get your IP address..</p>
+            <p class="text-dark m-2"> * To check your IP adress details, just click the Button..</p>
         </div>
     `);
 
