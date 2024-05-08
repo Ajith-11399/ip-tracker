@@ -69,25 +69,6 @@
 
             const tbody = document.createElement("tbody");
 
-            //! Assigning label and value =>
-            // const rowData = [
-            //     { label: "IP Address", value: data.ip_address },
-            //     { label: "City", value: data.city },
-            //     { label: "Region Name", value: data.region },
-            //     { label: "Region Code", value: data.region_iso_code },
-            //     { label: "Postal Code", value: data.postal_code },
-            //     { label: "Country Name", value: data.country },
-            //     { label: "Country Code", value: data.country_code },
-            //     { label: "Latitude", value: data.latitude },
-            //     { label: "Longitude", value: data.longitude },
-            //     { label: "VPN", value: data.security.is_vpn },
-            //     { label: "Timezone", value: data.timezone.name || "NA" }, 
-            //     { label: "Current Time", value: data.timezone.current_time },
-            //     { label: "Currency", value: data.currency_code },
-            //     { label: "Connection Type", value: data.connection.connection_type },
-            //     { label: "ISP", value: data.connection.isp_name },
-            // ];
-
             const rowData = [
                 { label: "IP Address", value: data.ip_address },
                 { label: "City", value: data.city },
